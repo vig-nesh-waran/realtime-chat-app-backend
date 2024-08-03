@@ -7,6 +7,18 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
+const helmet = require('helmet');
+const path = require('path');
+
+app.use(helmet({
+  permissionsPolicy: {
+    features: {
+      'interest-cohort': ['none']
+    }
+  }
+}));
+
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use(cors());
 const server = http.createServer(app);
