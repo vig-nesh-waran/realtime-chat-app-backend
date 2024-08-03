@@ -25,7 +25,7 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://vig-nesh-waran.github.io/realtime-chat-app-frontend/",
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
     credentials: true,
