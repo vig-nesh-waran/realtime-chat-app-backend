@@ -2,13 +2,13 @@ const express = require('express');
 const socketio = require('socket.io');
 const http = require('http');
 const cors = require('cors');
-const router = require('./router');
+const helmet = require('helmet');
+const path = require('path');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./users');
+const router = require('./router');
 
 const PORT = process.env.PORT || 5000;
 const app = express();
-const helmet = require('helmet');
-const path = require('path');
 
 app.use(helmet({
   permissionsPolicy: {
@@ -18,16 +18,23 @@ app.use(helmet({
   }
 }));
 
-app.use(express.static(path.join(__dirname, 'dist')));
+app.use(cors({
+  origin: 'https://vig-nesh-waran.github.io',
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['my-custom-header'],
+  credentials: true,
+}));
 
-app.use(cors());
+app.use(express.static(path.join(__dirname, 'dist')));
+app.use(router);
+
 const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: "https://vig-nesh-waran.github.io/realtime-chat-app-frontend/",
-    methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
+    origin: 'https://vig-nesh-waran.github.io',
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['my-custom-header'],
     credentials: true,
   },
 });
@@ -70,7 +77,5 @@ io.on('connection', (socket) => {
     }
   });
 });
-
-app.use(router);
 
 server.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
