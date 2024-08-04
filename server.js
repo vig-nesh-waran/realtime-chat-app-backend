@@ -19,7 +19,7 @@ app.use(helmet({
 }));
 
 app.use(cors({
-  origin: 'https://vig-nesh-waran.github.io',
+  origin: 'https://realtime-chat-app-frontend-3ekb.onrender.com',
   methods: ['GET', 'POST'],
   allowedHeaders: ['my-custom-header'],
   credentials: true,
@@ -32,7 +32,7 @@ const server = http.createServer(app);
 
 const io = socketio(server, {
   cors: {
-    origin: 'https://vig-nesh-waran.github.io/realtime-chat-app-frontend/',
+    origin: 'https://realtime-chat-app-frontend-3ekb.onrender.com',
     methods: ['GET', 'POST'],
     allowedHeaders: ['my-custom-header'],
     credentials: true,
